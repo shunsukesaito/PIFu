@@ -1,0 +1,13 @@
+@article{pifuSHNMKL19,
+  title={PIFu: Pixel-Aligned Implicit Function for 
+High-Resolution Clothed Human Digitization},
+  author = {Shunsuke Saito and
+  and Zeng Huang
+  and Ryota Natsume
+  and Shigeo Morishima
+  and Angjoo Kanazawa
+  and Hao Li
+  },
+  journal={arXiv preprint arXiv:1905.05172},
+  year={2019}
+}

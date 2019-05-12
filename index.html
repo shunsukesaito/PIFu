@@ -1,0 +1,371 @@
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-66428408-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-66428408-2');
+</script>
+
+<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+<script type="text/javascript">google.load("jquery", "1.3.2");</script>
+
+<style type="text/css">
+    body {
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-weight:300;
+        font-size:18px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 1000px;
+    }
+
+    h1 {
+        font-weight:300;
+    }
+
+    .disclaimerbox {
+        background-color: #eee;
+        border: 1px solid #eeeeee;
+        border-radius: 10px ;
+        -moz-border-radius: 10px ;
+        -webkit-border-radius: 10px ;
+        padding: 20px;
+    }
+
+    video.header-vid {
+        height: 140px;
+        border: 1px solid black;
+        border-radius: 10px ;
+        -moz-border-radius: 10px ;
+        -webkit-border-radius: 10px ;
+    }
+
+    img.header-img {
+        height: 140px;
+        border: 1px solid black;
+        border-radius: 10px ;
+        -moz-border-radius: 10px ;
+        -webkit-border-radius: 10px ;
+    }
+
+    img.rounded {
+        border: 1px solid #eeeeee;
+        border-radius: 10px ;
+        -moz-border-radius: 10px ;
+        -webkit-border-radius: 10px ;
+    }
+
+    a:link,a:visited
+    {
+        color: #1367a7;
+        text-decoration: none;
+    }
+    a:hover {
+        color: #208799;
+    }
+
+    td.dl-link {
+        height: 160px;
+        text-align: center;
+        font-size: 22px;
+    }
+
+    .layered-paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+        box-shadow:
+                0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+                5px 5px 0 0px #fff, /* The second layer */
+                5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+                10px 10px 0 0px #fff, /* The third layer */
+                10px 10px 1px 1px rgba(0,0,0,0.35), /* The third layer shadow */
+                15px 15px 0 0px #fff, /* The fourth layer */
+                15px 15px 1px 1px rgba(0,0,0,0.35), /* The fourth layer shadow */
+                20px 20px 0 0px #fff, /* The fifth layer */
+                20px 20px 1px 1px rgba(0,0,0,0.35), /* The fifth layer shadow */
+                25px 25px 0 0px #fff, /* The fifth layer */
+                25px 25px 1px 1px rgba(0,0,0,0.35); /* The fifth layer shadow */
+        margin-left: 10px;
+        margin-right: 45px;
+    }
+
+
+    .layered-paper { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+        box-shadow:
+                0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+                5px 5px 0 0px #fff, /* The second layer */
+                5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+                10px 10px 0 0px #fff, /* The third layer */
+                10px 10px 1px 1px rgba(0,0,0,0.35); /* The third layer shadow */
+        margin-top: 5px;
+        margin-left: 10px;
+        margin-right: 30px;
+        margin-bottom: 5px;
+    }
+
+    .vert-cent {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    hr
+    {
+        border: 0;
+        height: 1.5px;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    }
+</style>
+
+<html>
+  <head>
+        <title>PIFu: Pixel-Aligned Implicit Function for High-Resolution Clothed Human Digitization</title>
+        <meta property="og:title" content="PIFu" />
+        <meta property="og:image" content="https://shunsukesaito.github.io/PIFu/resources/images/teaser.png" />
+        <meta property="og:url" content="https://youtu.be/S1FpjwKqtPs" />
+  </head>
+
+  <body>
+    <br>
+    <center>
+    <span style="font-size:42px">PIFu: Pixel-Aligned Implicit Function for </br>High-Resolution Clothed Human Digitization</span>
+    
+    </center>
+
+    <br><br>
+      <table align=center width=800px>
+       <tr>
+         <td align=center width=100px>
+         <center>
+         <span style="font-size:20px"><a href="http://www-scf.usc.edu/~saitos/">Shunsuke Saito<sup>1,2 *</sup></a></span>
+         </center>
+         </td>
+
+        <td align=center width=100px>
+        <center>
+        <span style="font-size:20px"><a href="https://zeng.science/">Zeng Huang<sup>1,2 *</sup></a></span>
+        </center>
+        </td>
+
+        <td align=center width=100px>
+          <center>
+          <span style="font-size:20px"><a href="https://scholar.google.co.jp/citations?user=0vZ20kgAAAAJ">Ryota Natsume<sup>3 *</sup></a></span>
+          </center>
+        </td>
+      <tr>
+      </tr>
+        <td align=center width=100px>
+          <center>
+          <span style="font-size:20px"><a href="https://scholar.google.com/citations?user=4B-C50EAAAAJ">Shigeo Morishima<sup>3</sup></a></span>
+          </center>
+        </td>
+
+        <td align=center width=100px>
+        <center>
+        <span style="font-size:20px"><a href="http://www.eecs.berkeley.edu/~kanazawa/">Angjoo Kanazawa<sup>4</sup></a></span>
+        </center>
+        </td>
+
+        <td align=center width=100px>
+        <center>
+        <span style="font-size:20px"><a href="https://www.hao-li.com">Hao Li<sup>1,2,5</sup></a></span>
+        </center>
+        </td>
+     </tr>
+    </table>
+
+    <table align=center width=800px>
+       <tr>
+        <td align=center width=100px>
+        <center>
+        <span style="font-size:16px"><br/>University of Southern California<sup>1</sup><br/>USC Institute for Creative Technologies<sup>2</sup><br/>Waseda University<sup>3</sup><br/>University of California, Berkeley<sup>4</sup><br/>Pinscreen<sup>5</sup><br/></span>
+        </center>
+        </td>
+     </tr>
+    </table>
+
+    <br>
+    <table align=center width=400px>
+     <tr>
+       <td align=center width=100px>
+       <center>
+       <span style="font-size:20px"><a href="https://arxiv.org/pdf/1905.05172.pdf">[Paper]</a></span>
+       </center>
+       </td>
+
+      <td align=center width=100px>
+      <center>
+      <span style="font-size:20px"><a href="https://youtu.be/S1FpjwKqtPs">[Video]</a></span>
+      </center>
+      </td>
+       
+      <td align=center width=100px>
+      <center>
+      <span style="font-size:20px"><a href="https://github.com/shunsukesaito/PIFu">[Code]</a></span>
+      </center>
+      </td>
+      
+   </tr>
+  </table>
+
+            <br>
+            <br>
+            <table align=center width=600px>
+                <tr>
+                    <td width=600px>
+                      <center>
+                          <a href="https://youtu.be/S1FpjwKqtPs"><img src = "./resources/images/teaser.png" height="300px"></img></href></a><br>
+                    </center>
+                    </td>
+                </tr>
+                    <td width=600px>
+                      <center>
+                          <span style="font-size:14px"><i>
+                            Our approach can digitize intricate variations in clothing, such as wrinkled skirts, high-heels, and complex hairstyles. Shape and textures can be fully recovered in largely unseen regions such as the back of the subject.
+                            Our method can also be extended to multi-view input images.</i>
+                    </center>
+                    </td>
+                </tr>
+            </table>
+
+            <br>
+              <div style="max-width:90%; margin:0 auto">
+                We introduce Pixel-aligned Implicit Function (PIFu), a highly effective implicit representation that locally aligns pixels of 2D images with the global context of their corresponding 3D object. Using PIFu, we propose an end-to-end deep learning method for digitizing highly detailed clothed humans that can infer both 3D surface and texture from a single image, and optionally, multiple input images. Highly intricate shapes, such as hairstyles, clothing, as well as their variations and deformations can be digitized in a unified way. Compared to existing representations used for 3D deep learning, PIFu can produce high-resolution surfaces including largely unseen regions such as the back of a person. In particular, it is memory efficient unlike the voxel representation, can handle arbitrary topology, and the resulting surface is spatially aligned with the input image. Furthermore, while previous techniques are designed to process either a single image or multiple views, PIFu extends naturally to arbitrary number of views. We demonstrate high-resolution and robust reconstructions on real world images from the DeepFashion dataset, which contains a variety of challenging clothing types. Our method achieves state-of-the-art performance on a public benchmark and outperforms the prior work for clothed human digitization from a single image.<br><br>
+              </div>
+          <hr>
+         <!-- <table align=center width=550px> -->
+            <table align=center width=800>
+             <center><h1>Paper</h1></center>
+                <tr>
+                  <td><a href="https://arxiv.org/pdf/1905.05172.pdf"><img style="height:200px" src="./resources/images/paper.png"/></a></td>
+                  <td><span style="font-size:14pt">Saito*, Huang*, Natsume*, Morishima, Kanazawa, Li.<br><br>
+                    PIFu: Pixel-Aligned Implicit Function for </br>High-Resolution Clothed Human Digitization.<br><br>
+                    ICCV 2019.<br><br>
+                      <a href="https://arxiv.org/pdf/1905.05172.pdf">[pdf]</a> &nbsp; &nbsp;
+                    <a href="https://shunsukesaito.github.io/PIFu/resources/bibtex.txt">[Bibtex]</a>
+                    </td>
+              </tr>
+            </table>
+          <br>
+
+                <hr>
+                <center><h1>Paper Video</h1></center>
+                <table align=center width=900px>
+                    <tr>
+                        <td width=600px>
+                          <center>
+                            <div class = "video">
+                              <iframe width="720" height="405" src="https://youtube.com/embed/S1FpjwKqtPs" frameborder="0" allowfullscreen></iframe>
+                           </div>
+                        </center>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <hr>
+
+                <center><h1>Single-View Reconstruction</h1></center>
+                <table align=center width=900px>
+                    <tr>
+                        <td width=600px>
+                          <center>
+                            <div class = "video">
+                              <video src="./resources/mp4/result_a.mp4" style="max-width:100%;" playsinline autoplay loop preload muted></video>
+                           </div>
+
+                            <div class = "video">
+                              <video src="./resources/mp4/result_b.mp4" style="max-width:100%;" playsinline autoplay loop preload muted></video>
+                            </div>
+                        </center>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <hr>
+   
+                <center><h1>Multi-View Reconstruction</h1></center>
+                <table align=center width=900px>
+                    <tr>
+                        <td width=600px>
+                          <center>
+                            <div class = "video">
+                              <img src="./resources/images/input.png" alt="" style="max-width:30%;">
+                              <video src="./resources/mp4/multi_geo.mp4" style="max-width:30%;" playsinline autoplay loop preload muted></video>
+                              <video src="./resources/mp4/multi_col.mp4" style="max-width:30%;" playsinline autoplay loop preload muted></video>
+
+                            </div>
+                        </center>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <hr>
+
+                <center><h1>Support Arbitrary Number of Views</h1></center>
+                <table align=center width=900px>
+                    <tr>
+                        <td width=600px>
+                          <center>
+                            <div class = "video">
+                              <video src="./resources/mp4/multi.mp4" style="max-width:100%;" autoplay loop preload muted playsinline></video>
+                           </div>
+                        </center>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <hr>
+
+                <center><h1>Single-View Video Reconstruction</h1></center>
+                <table align=center width=900px>
+                    <tr>
+                        <td width=600px>
+                          <center>
+                            <div class = "video">
+                              <video src="./resources/mp4/video.mp4" style="max-width:100%;" autoplay loop preload muted playsinline></video>
+                           </div>
+                           </div>
+                        </center>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <hr>
+
+         <center><h1>Code</h1></center>
+            <table align=center width=1000px>
+                <tr>
+                        <center>
+                          <a href='https://github.com/shunsukesaito/PIFu'><img class="round" style="height:250" src="./resources/images/overview.png"/></a>
+                        </center>
+              </tr>
+          </table>
+
+            <table align=center width=800px>
+              <tr><center> <br>
+                <span style="font-size:28px">&nbsp;<a href='https://github.com/shunsukesaito/PIFu'>[GitHub]</a>
+                  
+                <span style="font-size:28px"></a></span>
+              <br>
+              </center></tr>
+          </table>
+            <br>
+          <hr>
+
+
+            <table align=center width=1000px>
+                <tr>
+                    <td>
+                      <left>
+                <center><h1>Acknowledgements</h1></center>
+                    <div style="max-width: 90%; margin:0 auto">
+                      Hao Li is affiliated with the University of Southern California, the USC Institute for Creative Technologies, and Pinscreen. This research was conducted at USC and was funded by in part by the ONR YIP grant N00014-17-S-FO14, the CONIX Research Center, one of six centers in JUMP, a Semiconductor Research Corporation program sponsored by DARPA, the Andrew and Erna Viterbi Early Career Chair, the U.S. Army Research Laboratory under contract number W911NF-14-D-0005, Adobe, and Sony. This project was not funded by Pinscreen, nor has it been conducted at Pinscreen or by anyone else affiliated with Pinscreen. Shigeo Morishima is supported by the JST ACCEL Grant Number JPMJAC1602, JSPS KAKENHI Grant Number JP17H06101, the Waseda Research Institute for Science and Engineering. Angjoo Kanazawa is supported by the Berkeley Artificial Intelligence Research sponsors. The content of the information does not necessarily reflect the position or the policy of the Government, and no official endorsement should be inferred. This webpage template was borrowed from <a href="https://richzhang.github.io/colorization/">colorful folks</a>.
+                    </div>
+                </left>
+        </td>
+        </tr>
+        </table>
+
+        <br><br>
+</body>
+</html>
