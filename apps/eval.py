@@ -34,7 +34,7 @@ class Evaluator:
             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
         ])
         # set cuda
-        cuda = torch.device('cuda:%d' % opt.gpu_id)
+        cuda = torch.device('cuda:%d' % opt.gpu_id) if torch.cuda.is_available() else torch.device('cpu')
 
         # create net
         netG = HGPIFuNet(opt, projection_mode).to(device=cuda)
