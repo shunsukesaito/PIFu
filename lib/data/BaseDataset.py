@@ -39,7 +39,7 @@ class BaseDataset(Dataset):
             }
             return res
         except:
-            print("Requested subject %s has missing files. Using a random sample instead." % subject)
+            print("Requested index %s has missing files. Using a random sample instead." % index)
             return self.get_item(index=random.randint(0, self.__len__() - 1))
 
     def __getitem__(self, index):
