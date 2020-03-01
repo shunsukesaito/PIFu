@@ -1,5 +1,8 @@
 # PIFu: Pixel-Aligned Implicit Function for High-Resolution Clothed Human Digitization
 
+News:
+* \[2020/02/26\] License is updated to MIT license! Enjoy!
+
 This repository contains a pytorch implementation of "[PIFu: Pixel-Aligned Implicit Function for High-Resolution Clothed Human Digitization](https://arxiv.org/abs/1905.05172)".
 
 [Project Page](https://shunsukesaito.github.io/PIFu/)
@@ -16,6 +19,7 @@ month = {October},
 year = {2019}
 }
 ```
+
 
 This codebase provides: 
 - test code
@@ -38,6 +42,7 @@ for training and data generation
 - freeglut (use `sudo apt-get install freeglut3-dev` for ubuntu users)
 
 ## Demo
+Warning: The released model is trained with mostly upright standing scans with weak perspectie projection and the pitch angle of 0 degree. Reconstruction quality may degrade for images highly deviated from trainining data.
 1. run the following script to download the pretrained models from the following link and copy them under `./PIFu/checkpoints/`.
 ```
 sh ./scripts/download_trained_model.sh
@@ -77,3 +82,7 @@ python -m apps.train_shape --dataroot {path_to_training_data} --random_flip --ra
 ```
 python -m apps.train_color --dataroot {path_to_training_data} --num_sample_inout 0 --num_sample_color 5000 --sigma 0.1 --random_flip --random_scale --random_trans
 ```
+
+For commercial queries, please contact:
+
+Hao Li: hao@hao-li.com ccto: saitos@usc.edu Baker!!
