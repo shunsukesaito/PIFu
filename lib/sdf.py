@@ -1,5 +1,5 @@
 import numpy as np
-
+from tqdm import tqdm
 
 def create_grid(resX, resY, resZ, b_min=np.array([0, 0, 0]), b_max=np.array([1, 1, 1]), transform=None):
     '''

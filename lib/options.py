@@ -116,6 +116,9 @@ class BaseOptions():
         parser.add_argument('--mask_path', type=str, help='path for input mask')
         parser.add_argument('--img_path', type=str, help='path for input image')
 
+        parser.add_argument('--only_sdf', type=str, help='geneterate only sdf')
+        parser.add_argument('--load_sdf', type=str, help='load sdf from flie')
+
         # aug
         group_aug = parser.add_argument_group('aug')
         group_aug.add_argument('--aug_alstd', type=float, default=0.0, help='augmentation pca lighting alpha std')

@@ -78,6 +78,7 @@ class Evaluator:
         image = Image.open(image_path).convert('RGB')
         image = self.to_tensor(image)
         image = mask.expand_as(image) * image
+
         return {
             'name': img_name,
             'img': image.unsqueeze(0),
@@ -94,15 +95,42 @@ class Evaluator:
         :return:
         '''
         opt = self.opt
+        app = TrainApp(
+            self.cuda,
+            opt.resolution,
+            data["b_min"],
+            data["b_max"],
+            10000,
+            True
+        )
+
         with torch.no_grad():
             self.netG.eval()
             if self.netC:
                 self.netC.eval()
             save_path = '%s/%s/result_%s.obj' % (opt.results_path, opt.name, data['name'])
-            if self.netC:
-                gen_mesh_color(opt, self.netG, self.netC, self.cuda, data, save_path, use_octree=use_octree)
+
+            if opt.only_sdf is not None:
+                app.gen_sdf_to_file(
+                    self.netG,
+                    data["img"],
+                    data["calib"],
+                    opt.only_sdf
+                )
+            elif opt.load_sdf is not None:
+                app.gen_surface_from_file(
+                    self.netG,
+                    self.netC,
+                    data["img"],
+                    data["calib"],
+                    opt.load_sdf,
+                    save_path,
+                    opt.num_views
+                )
+            elif self.netC:
+                app.gen_mesh_color(self.netG, self.netC, data["img"], data["calib"], save_path, opt.num_views)
             else:
-                gen_mesh(opt, self.netG, self.cuda, data, save_path, use_octree=use_octree)
+                app.gen_mesh(self.netG,data["img"], data["calib"], save_path)
 
 
 if __name__ == '__main__':

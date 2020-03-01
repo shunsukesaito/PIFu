@@ -4,6 +4,28 @@ import torch
 from .sdf import create_grid, eval_grid_octree, eval_grid
 from skimage import measure
 
+def generate_sdf(net,cuda,calib_tensor,num_samples,use_octree,coords,mat):
+    # Then we define the lambda function for cell evaluation
+    def eval_func(points):
+        points = np.expand_dims(points, axis=0)
+        points = np.repeat(points, net.num_views, axis=0)
+        samples = torch.from_numpy(points).to(device=cuda).float()
+        net.query(samples, calib_tensor)
+        pred = net.get_preds()[0][0]
+        return pred.detach().cpu().numpy()
+
+    if use_octree:
+        return eval_grid_octree(coords, eval_func, num_samples=num_samples)
+    else:
+        return eval_grid(coords, eval_func, num_samples=num_samples)
+
+def generate_surface(mat,sdf):
+    verts, faces, normals, values = measure.marching_cubes_lewiner(sdf, 0.5)
+
+    # transform verts into world coordinate system
+    verts = np.matmul(mat[:3, :3], verts.T) + mat[:3, 3:4]
+    verts = verts.T
+    return verts, faces, normals, values
 
 def reconstruction(net, cuda, calib_tensor,
                    resolution, b_min, b_max,
@@ -25,28 +47,13 @@ def reconstruction(net, cuda, calib_tensor,
     coords, mat = create_grid(resolution, resolution, resolution,
                               b_min, b_max, transform=transform)
 
-    # Then we define the lambda function for cell evaluation
-    def eval_func(points):
-        points = np.expand_dims(points, axis=0)
-        points = np.repeat(points, net.num_views, axis=0)
-        samples = torch.from_numpy(points).to(device=cuda).float()
-        net.query(samples, calib_tensor)
-        pred = net.get_preds()[0][0]
-        return pred.detach().cpu().numpy()
-
-    # Then we evaluate the grid
-    if use_octree:
-        sdf = eval_grid_octree(coords, eval_func, num_samples=num_samples)
-    else:
-        sdf = eval_grid(coords, eval_func, num_samples=num_samples)
+    print("Generate SDF")
+    sdf = generate_sdf(net,cuda,calib_tensor,num_samples,use_octree,coords,mat)
 
     # Finally we do marching cubes
     try:
-        verts, faces, normals, values = measure.marching_cubes_lewiner(sdf, 0.5)
-        # transform verts into world coordinate system
-        verts = np.matmul(mat[:3, :3], verts.T) + mat[:3, 3:4]
-        verts = verts.T
-        return verts, faces, normals, values
+        print("Generate Surface")
+        return generate_surface(mat,sdf)
     except:
         print('error cannot marching cubes')
         return -1
