@@ -83,6 +83,32 @@ python -m apps.train_shape --dataroot {path_to_training_data} --random_flip --ra
 python -m apps.train_color --dataroot {path_to_training_data} --num_sample_inout 0 --num_sample_color 5000 --sigma 0.1 --random_flip --random_scale --random_trans
 ```
 
+## Related Research
+
+[Multi-Level Pixel-Aligned Implicit Function for High-Resolution 3D Human Digitization (CVPR 2020)](https://shunsukesaito.github.io/PIFu/)  
+Shunsuke Saito, Tomas Simon, Jason Saragih, Hanbyul Joo
+
+We further improve the quality of reconstruction by leveraging multi-level approach! 
+
+[Learning to Infer Implicit Surfaces without 3d Supervision (NeurIPS 2019)](http://papers.nips.cc/paper/9039-learning-to-infer-implicit-surfaces-without-3d-supervision.pdf)  
+Shichen Liu, Shunsuke Saito, Weikai Chen, Hao Li
+
+We answer to the question of "how can we learn implicit function if we don't have 3D ground truth?"
+
+[SiCloPe: Silhouette-Based Clothed People (CVPR 2019, best paper finalist)](https://arxiv.org/pdf/1901.00049.pdf)  
+Ryota Natsume*, Shunsuke Saito*, Zeng Huang, Weikai Chen, Chongyang Ma, Hao Li, Shigeo Morishima (*-equal contribution)
+
+Our first attempt to reconstruct 3D clothed human body with texture from a single image!
+
+[Deep Volumetric Video from Very Sparse Multi-view Performance Capture (ECCV 2018)](http://openaccess.thecvf.com/content_ECCV_2018/papers/Zeng_Huang_Deep_Volumetric_Video_ECCV_2018_paper.pdf)  
+Zeng Huang, Tianye Li, Weikai Chen, Yajie Zhao, Jun Xing, Chloe LeGendre, Linjie Luo, Chongyang Ma, Hao Li
+
+Implict surface learning for sparse view human performance capture!
+
+------
+
+
+
 For commercial queries, please contact:
 
 Hao Li: hao@hao-li.com ccto: saitos@usc.edu Baker!!
