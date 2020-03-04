@@ -33,13 +33,41 @@ This codebase provides:
 - PIL
 - skimage
 - tqdm
+- numpy
+- cv2
 
 for training and data generation
 - [trimesh](https://trimsh.org/) with [pyembree](https://github.com/scopatz/pyembree)
-- cv2
 - [pyexr](https://github.com/tvogels/pyexr)
 - PyOpenGL
 - freeglut (use `sudo apt-get install freeglut3-dev` for ubuntu users)
+
+## Windows demo installation instuction
+
+- Install [miniconda](https://docs.conda.io/en/latest/miniconda.html)
+- Add `conda` to PATH
+- Install [git bash](https://git-scm.com/downloads)
+- Launch `Git\bin\bash.exe`
+- `eval "$(conda shell.bash hook)"` then `conda activate my_env` because of [this](https://github.com/conda/conda-build/issues/3371)
+- Automatic `env create -f environment.yml` (look [this](https://github.com/conda/conda/issues/3417))
+- OR manually setup [environment](https://towardsdatascience.com/a-guide-to-conda-environments-bc6180fc533)
+    - `conda create —name pifu python` where `pifu` is name of your environment
+    - `conda activate`
+    - `conda install pytorch torchvision cudatoolkit=10.1 -c pytorch`
+    - `conda install pillow`
+    - `conda install scikit-image`
+    - `conda install tqdm`
+    - `conda install -c menpo opencv`
+- Download [wget.exe](https://eternallybored.org/misc/wget/)
+- Place it into `Git\mingw64\bin`
+- `sh ./scripts/download_trained_model.sh`
+- Remove background from your image ([this](https://www.remove.bg/), for example)
+- Create black-white mask .png
+- Replace original from sample_images/
+- Try it out - `sh ./scripts/test.sh`
+- Download [Meshlab](http://www.meshlab.net/) because of [this](https://github.com/shunsukesaito/PIFu/issues/1)
+- Open .obj file in Meshlab
+
 
 ## Demo
 Warning: The released model is trained with mostly upright standing scans with weak perspectie projection and the pitch angle of 0 degree. Reconstruction quality may degrade for images highly deviated from trainining data.
