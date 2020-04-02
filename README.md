@@ -118,6 +118,16 @@ Shunsuke Saito, Tomas Simon, Jason Saragih, Hanbyul Joo
 
 We further improve the quality of reconstruction by leveraging multi-level approach!
 
+Learning to Digitize Animatable 3D Clothed Humans from Unconstrained Photos (CVPR 2020)
+Zeng Huang, Yuanlu Xu, Christoph Lassner, Hao Li, Tony Tung
+
+Learning PIFu in canonical space for animatable avatar generation!
+
+[Robust 3D Self-portraits in Seconds (CVPR 2020)](http://www.liuyebin.com/portrait/portrait.html)
+Zhe Li, Tao Yu, Chuanyu Pan, Zerong Zheng, Yebin Liu
+
+They extend PIFu to RGBD + introduce "PIFusion" utilizing PIFu reconstruction for non-rigid fusion.
+
 [Learning to Infer Implicit Surfaces without 3d Supervision (NeurIPS 2019)](http://papers.nips.cc/paper/9039-learning-to-infer-implicit-surfaces-without-3d-supervision.pdf)  
 Shichen Liu, Shunsuke Saito, Weikai Chen, Hao Li
 
