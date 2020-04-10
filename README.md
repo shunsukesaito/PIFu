@@ -118,7 +118,7 @@ python -m apps.train_color --dataroot {path_to_training_data} --num_sample_inout
 
 We further improve the quality of reconstruction by leveraging multi-level approach!
 
-**Learning to Digitize Animatable 3D Clothed Humans from Unconstrained Photos (CVPR 2020)**  
+**[ARCH: Animatable Reconstruction of Clothed Humans (CVPR 2020)](https://arxiv.org/pdf/2004.04572.pdf)**  
 *Zeng Huang, Yuanlu Xu, Christoph Lassner, Hao Li, Tony Tung*
 
 Learning PIFu in canonical space for animatable avatar generation!
