@@ -2,7 +2,6 @@
 
 from lib.renderer.camera import Camera
 import numpy as np
-from lib.renderer.gl.prt_render import PRTRender
 from lib.renderer.mesh import load_obj_mesh, compute_tangent, compute_normal, load_obj_mesh_mtl
 from lib.renderer.camera import Camera
 import os
@@ -12,7 +11,7 @@ import math
 import random
 import pyexr
 import argparse
-
+from tqdm import tqdm
 
 
 def make_rotate(rx, ry, rz):
@@ -135,7 +134,7 @@ def rotateBand2(x, R):
     d2 += sh4 * (r4z * r4z + s_c4_div_c3_x2)
     d3 += sh4_x * r4z
     d4 += sh4_x * r4x - sh4_y * r4y
-    
+
     dst = x
     dst[0] = d0
     dst[1] = -d1
@@ -213,7 +212,7 @@ def render_prt_ortho(out_path, folder_name, subject_name, shs, rndr, rndr_uv, an
     os.system(cmd)
 
     for p in pitch:
-        for y in range(0, 360, angl_step):
+        for y in tqdm(range(0, 360, angl_step)):
             R = np.matmul(make_rotate(math.radians(p), 0, 0), make_rotate(0, math.radians(y), 0))
             if up_axis == 2:
                 R = np.matmul(R, make_rotate(math.radians(90),0,0))
@@ -273,10 +272,17 @@ if __name__ == '__main__':
     parser.add_argument('-i', '--input', type=str, default='/home/shunsuke/Downloads/rp_dennis_posed_004_OBJ')
     parser.add_argument('-o', '--out_dir', type=str, default='/home/shunsuke/Documents/hf_human')
     parser.add_argument('-m', '--ms_rate', type=int, default=1, help='higher ms rate results in less aliased output. MESA renderer only supports ms_rate=1.')
+    parser.add_argument('-e', '--egl',  action='store_true', help='egl rendering option. use this when rendering with headless server with NVIDIA GPU')
+    parser.add_argument('-s', '--size',  type=int, default=512, help='rendering image size')
     args = parser.parse_args()
 
-    rndr = PRTRender(width=512, height=512, ms_rate=args.ms_rate)
-    rndr_uv = PRTRender(width=512, height=512, uv_mode=True)
+    # NOTE: GL context has to be created before any other OpenGL function loads.
+    from lib.renderer.gl.init_gl import initialize_GL_context
+    initialize_GL_context(width=args.size, height=args.size, egl=args.egl)
+
+    from lib.renderer.gl.prt_render import PRTRender
+    rndr = PRTRender(width=args.size, height=args.size, ms_rate=args.ms_rate, egl=args.egl)
+    rndr_uv = PRTRender(width=args.size, height=args.size, uv_mode=True, egl=args.egl)
 
     if args.input[-1] == '/':
         args.input = args.input[:-1]

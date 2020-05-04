@@ -1,32 +1,25 @@
+from ctypes import *
+
 import numpy as np
-from OpenGL.GLUT import *
 from .framework import *
 
-_glut_window = None
+GLUT = None
 
+# NOTE: Render class assumes GL context is created already.
 class Render:
     def __init__(self, width=1600, height=1200, name='GL Renderer',
-                 program_files=['simple.fs', 'simple.vs'], color_size=1, ms_rate=1):
+                 program_files=['simple.fs', 'simple.vs'], color_size=1, ms_rate=1, egl=False):
         self.width = width
         self.height = height
         self.name = name
-        self.display_mode = GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH
         self.use_inverse_depth = False
+        self.egl = egl
+        
+        glEnable(GL_DEPTH_TEST)
 
-        global _glut_window
-        if _glut_window is None:
-            glutInit()
-            glutInitDisplayMode(self.display_mode)
-            glutInitWindowSize(self.width, self.height)
-            glutInitWindowPosition(0, 0)
-            _glut_window = glutCreateWindow("My Render.")
-
-            # glEnable(GL_DEPTH_CLAMP)
-            glEnable(GL_DEPTH_TEST)
-
-            glClampColor(GL_CLAMP_READ_COLOR, GL_FALSE)
-            glClampColor(GL_CLAMP_FRAGMENT_COLOR, GL_FALSE)
-            glClampColor(GL_CLAMP_VERTEX_COLOR, GL_FALSE)
+        glClampColor(GL_CLAMP_READ_COLOR, GL_FALSE)
+        glClampColor(GL_CLAMP_FRAGMENT_COLOR, GL_FALSE)
+        glClampColor(GL_CLAMP_VERTEX_COLOR, GL_FALSE)
 
         # init program
         shader_list = []
@@ -152,7 +145,10 @@ class Render:
         self.model_view_matrix = None
         self.projection_matrix = None
 
-        glutDisplayFunc(self.display)
+        if not egl:
+            global GLUT
+            import OpenGL.GLUT as GLUT
+            GLUT.glutDisplayFunc(self.display)
 
 
     def init_quad_program(self):
@@ -266,46 +262,49 @@ class Render:
         return z
 
     def display(self):
-        # First we draw a scene.
-        # Notice the result is stored in the texture buffer.
         self.draw()
 
-        # Then we return to the default frame buffer since we will display on the screen.
-        glBindFramebuffer(GL_FRAMEBUFFER, 0)
+        if not self.egl:
+            # First we draw a scene.
+            # Notice the result is stored in the texture buffer.
 
-        # Do the clean-up.
-        glClearColor(0.0, 0.0, 0.0, 0.0)
-        glClear(GL_COLOR_BUFFER_BIT)
+            # Then we return to the default frame buffer since we will display on the screen.
+            glBindFramebuffer(GL_FRAMEBUFFER, 0)
 
-        # We draw a rectangle which covers the whole screen.
-        glUseProgram(self.quad_program)
-        glBindBuffer(GL_ARRAY_BUFFER, self.quad_buffer)
+            # Do the clean-up.
+            glClearColor(0.0, 0.0, 0.0, 0.0)
+            glClear(GL_COLOR_BUFFER_BIT)
 
-        size_of_double = 8
-        glEnableVertexAttribArray(0)
-        glVertexAttribPointer(0, 2, GL_DOUBLE, GL_FALSE, 4 * size_of_double, None)
-        glEnableVertexAttribArray(1)
-        glVertexAttribPointer(1, 2, GL_DOUBLE, GL_FALSE, 4 * size_of_double, c_void_p(2 * size_of_double))
+            # We draw a rectangle which covers the whole screen.
+            glUseProgram(self.quad_program)
+            glBindBuffer(GL_ARRAY_BUFFER, self.quad_buffer)
 
-        glDisable(GL_DEPTH_TEST)
+            size_of_double = 8
+            glEnableVertexAttribArray(0)
+            glVertexAttribPointer(0, 2, GL_DOUBLE, GL_FALSE, 4 * size_of_double, None)
+            glEnableVertexAttribArray(1)
+            glVertexAttribPointer(1, 2, GL_DOUBLE, GL_FALSE, 4 * size_of_double, c_void_p(2 * size_of_double))
 
-        # The stored texture is then mapped to this rectangle.
-        # properly assing color buffer texture
-        glActiveTexture(GL_TEXTURE0)
-        glBindTexture(GL_TEXTURE_2D, self.screen_texture[0])
-        glUniform1i(glGetUniformLocation(self.quad_program, 'screenTexture'), 0)
+            glDisable(GL_DEPTH_TEST)
 
-        glDrawArrays(GL_TRIANGLES, 0, 6)
+            # The stored texture is then mapped to this rectangle.
+            # properly assing color buffer texture
+            glActiveTexture(GL_TEXTURE0)
+            glBindTexture(GL_TEXTURE_2D, self.screen_texture[0])
+            glUniform1i(glGetUniformLocation(self.quad_program, 'screenTexture'), 0)
 
-        glDisableVertexAttribArray(1)
-        glDisableVertexAttribArray(0)
+            glDrawArrays(GL_TRIANGLES, 0, 6)
 
-        glEnable(GL_DEPTH_TEST)
-        glBindBuffer(GL_ARRAY_BUFFER, 0)
-        glUseProgram(0)
+            glDisableVertexAttribArray(1)
+            glDisableVertexAttribArray(0)
 
-        glutSwapBuffers()
-        glutPostRedisplay()
+            glEnable(GL_DEPTH_TEST)
+            glBindBuffer(GL_ARRAY_BUFFER, 0)
+            glUseProgram(0)
+
+            GLUT.glutSwapBuffers()
+            GLUT.glutPostRedisplay()
 
     def show(self):
-        glutMainLoop()
+        if not self.egl:
+            GLUT.glutMainLoop()

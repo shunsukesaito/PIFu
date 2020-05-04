@@ -1,16 +1,18 @@
-from OpenGL.GLUT import *
-
 from .render import Render
 
+GLUT = None
 
 class CamRender(Render):
     def __init__(self, width=1600, height=1200, name='Cam Renderer',
-                 program_files=['simple.fs', 'simple.vs'], color_size=1, ms_rate=1):
-        Render.__init__(self, width, height, name, program_files, color_size, ms_rate=ms_rate)
+                 program_files=['simple.fs', 'simple.vs'], color_size=1, ms_rate=1, egl=False):
+        Render.__init__(self, width, height, name, program_files, color_size, ms_rate=ms_rate, egl=egl)
         self.camera = None
 
-        glutDisplayFunc(self.display)
-        glutKeyboardFunc(self.keyboard)
+        if not egl:
+            global GLUT
+            import OpenGL.GLUT as GLUT
+            GLUT.glutDisplayFunc(self.display)
+            GLUT.glutKeyboardFunc(self.keyboard)
 
     def set_camera(self, camera):
         self.camera = camera
@@ -42,4 +44,5 @@ class CamRender(Render):
         self.projection_matrix, self.model_view_matrix = self.camera.get_gl_matrix()
 
     def show(self):
-        glutMainLoop()
+        if GLUT is not None:
+            GLUT.glutMainLoop()
