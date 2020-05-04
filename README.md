@@ -3,6 +3,7 @@
 [![report](https://img.shields.io/badge/arxiv-report-red)](https://arxiv.org/abs/1905.05172) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1GFSsqP2BWz4gtq0e-nki00ZHSirXwFyY)
 
 News:
+* \[2020/05/04\] Added EGL rendering option for training data generation. Now you can create your own training data with headless machines!
 * \[2020/04/13\] Demo with Google Colab (incl. visualization) is available. Special thanks to [@nanopoteto](https://github.com/nanopoteto)!!!
 * \[2020/02/26\] License is updated to MIT license! Enjoy!
 
@@ -44,6 +45,7 @@ for training and data generation
 - [pyexr](https://github.com/tvogels/pyexr)
 - PyOpenGL
 - freeglut (use `sudo apt-get install freeglut3-dev` for ubuntu users)
+- (optional) egl related packages for rendering with headless machines. (use `apt install libgl1-mesa-dri libegl1-mesa libgbm1` for ubuntu users)
 
 ## Windows demo installation instuction
 
@@ -99,9 +101,9 @@ Warning: the following code becomes extremely slow without [pyembree](https://gi
 python -m apps.prt_util -i {path_to_rp_dennis_posed_004_OBJ}
 ```
 
-2. run the following script. Under the specified data path, the code creates folders named `GEO`, `RENDER`, `MASK`, `PARAM`, `UV_RENDER`, `UV_MASK`, `UV_NORMAL`, and `UV_POS`. Note that you may need to list validation subjects to exclude from training in `{path_to_training_data}/val.txt` (this tutorial has only one subject and leave it empty).
+2. run the following script. Under the specified data path, the code creates folders named `GEO`, `RENDER`, `MASK`, `PARAM`, `UV_RENDER`, `UV_MASK`, `UV_NORMAL`, and `UV_POS`. Note that you may need to list validation subjects to exclude from training in `{path_to_training_data}/val.txt` (this tutorial has only one subject and leave it empty). If you wish to render images with headless servers equipped with NVIDIA GPU, add -e to enable EGL rendering.
 ```
-python -m apps.render_data -i {path_to_rp_dennis_posed_004_OBJ} -o {path_to_training_data}
+python -m apps.render_data -i {path_to_rp_dennis_posed_004_OBJ} -o {path_to_training_data} [-e]
 ```
 
 ## Training (Linux Only)
