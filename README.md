@@ -47,6 +47,8 @@ for training and data generation
 - freeglut (use `sudo apt-get install freeglut3-dev` for ubuntu users)
 - (optional) egl related packages for rendering with headless machines. (use `apt install libgl1-mesa-dri libegl1-mesa libgbm1` for ubuntu users)
 
+Warning: I found that outdated NVIDIA drivers may cause errors with EGL. If you want to try out the EGL version, please update your NVIDIA driver to the latest!!
+
 ## Windows demo installation instuction
 
 - Install [miniconda](https://docs.conda.io/en/latest/miniconda.html)
