@@ -372,7 +372,7 @@ class TrainDataset(Dataset):
         # rot = render_data['calib'][0,:3, :3]
         # trans = render_data['calib'][0,:3, 3:4]
         # pts = torch.addmm(trans, rot, sample_data['samples'][:, sample_data['labels'][0] > 0.5])  # [3, N]
-        # pts = 0.5 * (pts.numpy().T + 1.0) * 512
+        # pts = 0.5 * (pts.numpy().T + 1.0) * render_data['img'].size(2)
         # for p in pts:
         #     img = cv2.circle(img, (p[0], p[1]), 2, (0,255,0), -1)
         # cv2.imshow('test', img)

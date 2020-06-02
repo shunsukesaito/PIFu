@@ -48,9 +48,9 @@ class SurfaceClassifier(nn.Module):
         tmpy = feature
         for i, f in enumerate(self.filters):
             if self.no_residual:
-                y = f(y)
+                y = self._modules['conv' + str(i)](y)
             else:
-                y = f(
+                y = self._modules['conv' + str(i)](
                     y if i == 0
                     else torch.cat([y, tmpy], 1)
                 )
