@@ -28,14 +28,13 @@ def process_img(img, msk, bbox=None):
     dw = min(cx, w-cx, hh)
     if cy-hh < 0:
         img = cv2.copyMakeBorder(img,hh-cy,0,0,0,cv2.BORDER_CONSTANT,value=[0,0,0])    
-        msk = cv2.copyMakeBorder(msk,hh-cy,0,0,0,cv2.BORDER_CONSTANT,value=0)    
+        msk = cv2.copyMakeBorder(msk,hh-cy,0,0,0,cv2.BORDER_CONSTANT,value=0) 
+        cy = hh
     if cy+hh > h:
         img = cv2.copyMakeBorder(img,0,cy+hh-h,0,0,cv2.BORDER_CONSTANT,value=[0,0,0])    
         msk = cv2.copyMakeBorder(msk,0,cy+hh-h,0,0,cv2.BORDER_CONSTANT,value=0)    
-
     img = img[cy-hh:(cy+hh),cx-dw:cx+dw,:]
     msk = msk[cy-hh:(cy+hh),cx-dw:cx+dw]
-
     dw = img.shape[0] - img.shape[1]
     if dw != 0:
         img = cv2.copyMakeBorder(img,0,0,dw//2,dw//2,cv2.BORDER_CONSTANT,value=[0,0,0])    
@@ -53,13 +52,17 @@ def main():
     given foreground mask, this script crops and resizes an input image and mask for processing.
     '''
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', '--input_image', type=str)
+    parser.add_argument('-i', '--input_image', type=str, help='if the image has alpha channel, it will be used as mask')
     parser.add_argument('-m', '--input_mask', type=str)
-    parser.add_argument('-m', '--out_path', type=str, default='./sample_images')
+    parser.add_argument('-o', '--out_path', type=str, default='./sample_images')
     args = parser.parse_args()
 
-    img = cv2.imread(args.input_image)
-    msk = cv2.imread(args.input_mask, cv2.IMREAD_GRAYSCALE)
+    img = cv2.imread(args.input_image, cv2.IMREAD_UNCHANGED)
+    if img.shape[2] == 4:
+        msk = img[:,:,3:]
+        img = img[:,:,:3]
+    else:
+        msk = cv2.imread(args.input_mask, cv2.IMREAD_GRAYSCALE)
 
     img_new, msk_new = process_img(img, msk)
 
