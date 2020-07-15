@@ -66,6 +66,9 @@ try:
   util.find_library = _find_library_new
   import OpenGL.GL as gl
   import OpenGL.EGL as egl
+  from OpenGL import error
+  from OpenGL.EGL.EXT.device_base import egl_get_devices
+  from OpenGL.raw.EGL.EXT.platform_device import EGL_PLATFORM_DEVICE_EXT
 except:
   print('Unable to load OpenGL libraries. '
         'Make sure you use GPU-enabled backend.')
@@ -75,6 +78,23 @@ except:
 finally:
   util.find_library = _find_library_old
 
+def create_initialized_headless_egl_display():
+  """Creates an initialized EGL display directly on a device."""
+  for device in egl_get_devices():
+    display = egl.eglGetPlatformDisplayEXT(EGL_PLATFORM_DEVICE_EXT, device, None)
+
+    if display != egl.EGL_NO_DISPLAY and egl.eglGetError() == egl.EGL_SUCCESS:
+      # `eglInitialize` may or may not raise an exception on failure depending
+      # on how PyOpenGL is configured. We therefore catch a `GLError` and also
+      # manually check the output of `eglGetError()` here.
+      try:
+        initialized = egl.eglInitialize(display, None, None)
+      except error.GLError:
+        pass
+      else:
+        if initialized == egl.EGL_TRUE and egl.eglGetError() == egl.EGL_SUCCESS:
+          return display
+  return egl.EGL_NO_DISPLAY
 
 def create_opengl_context(surface_size=(640, 480)):
   """Create offscreen OpenGL context and make it current.
@@ -85,7 +105,9 @@ def create_opengl_context(surface_size=(640, 480)):
   Args:
     surface_size: (width, height), size of the offscreen rendering surface.
   """
-  egl_display = egl.eglGetDisplay(egl.EGL_DEFAULT_DISPLAY)
+  egl_display = create_initialized_headless_egl_display()
+  if egl_display == egl.EGL_NO_DISPLAY:
+    raise ImportError('Cannot initialize a headless EGL display.')
 
   major, minor = egl.EGLint(), egl.EGLint()
   egl.eglInitialize(egl_display, pointer(major), pointer(minor))
