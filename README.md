@@ -123,6 +123,10 @@ python -m apps.train_color --dataroot {path_to_training_data} --num_sample_inout
 ```
 
 ## Related Research
+**[Monocular Real-Time Volumetric Performance Capture (ECCV 2020)](https://project-splinter.github.io/)**  
+*Ruilong Li\*, Yuliang Xiu\*, Shunsuke Saito, Zeng Huang, Kyle Olszewski, Hao Li*
+
+The first real-time PIFu by accelerating reconstruction and rendering!!
 
 **[PIFuHD: Multi-Level Pixel-Aligned Implicit Function for High-Resolution 3D Human Digitization (CVPR 2020)](https://shunsukesaito.github.io/PIFuHD/)**  
 *Shunsuke Saito, Tomas Simon, Jason Saragih, Hanbyul Joo*
