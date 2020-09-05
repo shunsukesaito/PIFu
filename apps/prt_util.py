@@ -86,8 +86,8 @@ def getSHCoeffs(order, phi, theta):
 
 def computePRT(mesh_path, n, order):
     mesh = trimesh.load(mesh_path, process=False)
-    vectors, phi, theta = sampleSphericalDirections(n)
-    SH = getSHCoeffs(order, phi, theta)
+    vectors_orig, phi, theta = sampleSphericalDirections(n)
+    SH_orig = getSHCoeffs(order, phi, theta)
 
     w = 4.0 * math.pi / (n*n)
 
@@ -99,8 +99,8 @@ def computePRT(mesh_path, n, order):
     normals = np.repeat(normals[:,None], n, axis=1).reshape(-1,3)
     PRT_all = None
     for i in tqdm(range(n)):
-        SH = np.repeat(SH[None,(i*n):((i+1)*n)], n_v, axis=0).reshape(-1,SH.shape[1])
-        vectors = np.repeat(vectors[None,(i*n):((i+1)*n)], n_v, axis=0).reshape(-1,3)
+        SH = np.repeat(SH_orig[None,(i*n):((i+1)*n)], n_v, axis=0).reshape(-1,SH_orig.shape[1])
+        vectors = np.repeat(vectors_orig[None,(i*n):((i+1)*n)], n_v, axis=0).reshape(-1,3)
 
         dots = (vectors * normals).sum(1)
         front = (dots > 0.0)
