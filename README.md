@@ -68,7 +68,7 @@ Warning: I found that outdated NVIDIA drivers may cause errors with EGL. If you 
 - Download [wget.exe](https://eternallybored.org/misc/wget/)
 - Place it into `Git\mingw64\bin`
 - `sh ./scripts/download_trained_model.sh`
-- Remove background from your image ([this](https://www.remove.bg/), for example)
+- Remove background from your image ([this](https://www.remove.bg/), or [this (HD)](https://clipdrop.co/remove-background/) for example)
 - Create black-white mask .png
 - Replace original from sample_images/
 - Try it out - `sh ./scripts/test.sh`
