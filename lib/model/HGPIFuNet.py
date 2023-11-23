@@ -72,7 +72,7 @@ class HGPIFuNet(BasePIFuNet):
         store all intermediate features.
         query() function may behave differently during training/testing.
         :param points: [B, 3, N] world space coordinates of points
-        :param calibs: [B, 3, 4] calibration matrices for each image
+        :param calibs: [B, 4, 4] calibration matrices for each image
         :param transforms: Optional [B, 2, 3] image space coordinate transforms
         :param labels: Optional [B, Res, N] gt labeling
         :return: [B, Res, N] predictions for each point
